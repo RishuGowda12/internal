@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = 'C:\\Users\\STUDENT\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -13,22 +17,22 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Checking Python application'
-                bat 'python --version'
-                bat 'python -m py_compile python.py'
+                bat '"%PYTHON%" --version'
+                bat '"%PYTHON%" -m py_compile python.py'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Executing automated tests'
-                bat 'python -m unittest'
+                bat '"%PYTHON%" -m unittest'
             }
         }
 
         stage('Run Application') {
             steps {
                 echo 'Running Python application'
-                bat 'python python.py'
+                bat '"%PYTHON%" python.py'
             }
         }
     }
